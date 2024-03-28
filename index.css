@@ -1,4 +1,4 @@
-﻿#field {
+﻿#panel {
 width: 600px;
 }
 
@@ -17,7 +17,7 @@ text-align: center;
 cursor: pointer
 }
 
-.card-back {
+.back {
 background-image: url(card-back.png);
 background-size: 70px 100px;
 }
