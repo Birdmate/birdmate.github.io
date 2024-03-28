@@ -1,21 +1,27 @@
+﻿const $panel = document.getElementById('panel');
 const $start = document.getElementById('start');
 
-//コゲラ亜種とWBSJロゴで10種の画像を用意
-img = new Array();
+let startTime;
+let timer;
+let backTimer;
+let flgFirst = true;
+let cardFirst;
+let countUnit = 0;
 
-img[0] = "logo.jpg";
-img[1] = "ezokogera.jpg";
-img[2] = "kogera.jpg";
-img[3] = "miyakekogera.jpg";
-img[4] = "shikokukogera.jpg";
-img[5] = "tsushimakogera.jpg";
-img[6] = "kyushukogera.jpg";
-img[7] = "amamikogera.jpg";
-img[8] = "ryukyukogera.jpg";
-img[9] = "oirikogera.jpg";
+window.onload = () => {
+    initCard();
+    $start.addEventListener('click', (ev) => gameStart());
+}
+    let cardname = [
+        "logo", "ezokogera", "kogera", "miyakekogera", "shikokukogera",
+        "tsushimakogera", "kyushukogera", "amamikogera", "ryukyukogera", "oirikogera"
+    ];
+    let cardtag = [];
+    for (let i = 0; i < 10; i++) {
+        cardtag.push("<img src='" + cardname[i] + ".jpg'>")
+    }
 
-//2セットずつ20枚用意
-windows.onload = function () {
+function initCards() {
     let cards = [];
     for (let i = 0; i < 10; i++) {
         cards.push(i);
@@ -26,13 +32,12 @@ windows.onload = function () {
     let panel = document.getElementById('panel');
     for (let i = 0; i < 20; i++) {
         let div = document.createElement('div');
-        div.className = 'back';
-        div.index = i;
+        div.className = 'card back';
+        div.number = cards[i];
         div.onclick = flip;
         panel.appendChild(div);
     }
     //タイマー
-    let startTime;
     startTime = new Date();
     stratTimer();
 }
@@ -46,22 +51,18 @@ function shuffle(cards) {
 }
 function flip(crnt) {
     let div = crnt.target;
-    let backTimer;
     if (backTimer) return;
     if (div.innerHTML == '') {
         div.className = 'card';
-        div.innerHTML = '<img src="' + img[cards[div.index]] + '">';
+        div.innerHTML = cardtag[div.number];
     } else {
         return
     }
-    let flgFirst = true;
-    let cardFirst;
     if (flgFirst) {
         cardFirst = div;
         flgFirst = false;
     } else {
-        if (cardFirst.index == div.index) {
-            let countUnit = 0;
+        if (cardFirst.number == div.number) {
             countUnit++;
             backTimer = setTimeout(function () {
                 div.className = 'card finish';
@@ -95,4 +96,7 @@ function showSecond() {
     let cont = 'いま' + elapsedTime + '秒です ⁰⊖⁰)ﾉ';
     let rslt = document.getElementById('result');
     rslt.innerHTML = cont;
+}
+                function gameStart() {
+                    initCards();
                 }
