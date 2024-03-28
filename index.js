@@ -1,4 +1,6 @@
-﻿//コゲラ亜種とWBSJロゴで10種の画像を用意
+const $start = document.getElementById('start');
+
+//コゲラ亜種とWBSJロゴで10種の画像を用意
 img = new Array();
 
 img[0] = "logo.jpg";
