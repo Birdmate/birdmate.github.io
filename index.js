@@ -1,6 +1,3 @@
-﻿const $panel = document.getElementById('panel');
-const $start = document.getElementById('start');
-
 let startTime;
 let timer;
 let backTimer;
@@ -8,19 +5,15 @@ let flgFirst = true;
 let cardFirst;
 let countUnit = 0;
 
-window.onload = () => {
-    initCards();
-    $start.addEventListener('click', (ev) => gameStart());
+let cardname = [
+    "logo", "ezokogera", "kogera", "miyakekogera", "shikokukogera",
+    "tsushimakogera", "kyushukogera", "amamikogera", "ryukyukogera", "oirikogera"
+];
+let cardtag = [];
+for (let i = 0; i < 10; i++) {
+    cardtag.push("<img src='" + cardname[i] + ".jpg'>")
 }
-    let cardname = [
-        "logo", "ezokogera", "kogera", "miyakekogera", "shikokukogera",
-        "tsushimakogera", "kyushukogera", "amamikogera", "ryukyukogera", "oirikogera"
-    ];
-    let cardtag = [];
-    for (let i = 0; i < 10; i++) {
-        cardtag.push("<img src='" + cardname[i] + ".jpg'>")
-    }
-
+window.onload = function () {
 function initCards() {
     let cards = [];
     for (let i = 0; i < 10; i++) {
@@ -37,9 +30,6 @@ function initCards() {
         div.onclick = flip;
         panel.appendChild(div);
     }
-    //タイマー
-    startTime = new Date();
-    stratTimer();
 }
 function shuffle(cards) {
     let n = cards.length;
@@ -83,20 +73,28 @@ function flip(crnt) {
             }
                 , 500);
         }
-                    flgFirst = true;
-                }
-            }
+        flgFirst = true;
+    }
+}
 function startTimer() {
-                    timer = setInterval(showSecond, 1000);
-                }
+    timer = setInterval(showSecond, 1000);
+}
 function showSecond() {
-                    let nowTime = new Date();
-                    let elapsedTime = nowTime - startTime;
-                    let sec = Math.floor(elapsedTime / 1000);
+    let nowTime = new Date();
+    let elapsedTime = nowTime - startTime;
+    let sec = Math.floor(elapsedTime / 1000);
     let cont = 'いま' + elapsedTime + '秒です ⁰⊖⁰)ﾉ';
     let rslt = document.getElementById('result');
     rslt.innerHTML = cont;
 }
-                function gameStart() {
-                    initCards();
-                }
+window.onload = () => {
+    start.interHTML = 'スタート！';
+    initCards();
+}
+start.addEventListener('click', () => {
+    initCards();
+    //タイマー
+    startTime = new Date();
+    stratTimer();
+    start.interHTML = "リプレイ";
+}
