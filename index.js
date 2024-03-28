@@ -9,7 +9,7 @@ let cardFirst;
 let countUnit = 0;
 
 window.onload = () => {
-    initCard();
+    initCards();
     $start.addEventListener('click', (ev) => gameStart());
 }
     let cardname = [
