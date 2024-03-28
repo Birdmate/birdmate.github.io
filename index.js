@@ -24,7 +24,7 @@ windows.onload = function () {
     let panel = document.getElementById('panel');
     for (let i = 0; i < 20; i++) {
         let div = document.createElement('div');
-        div.className = 'card-back';
+        div.className = 'back';
         div.index = i;
         div.onclick = flip;
         panel.appendChild(div);
