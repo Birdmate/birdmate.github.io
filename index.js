@@ -1,4 +1,4 @@
-//ƒRƒQƒ‰ˆŸí‚ÆWBSJƒƒS‚Å10í‚Ì‰æ‘œ‚ğ—pˆÓ
+ï»¿//ã‚³ã‚²ãƒ©äºœç¨®ã¨WBSJãƒ­ã‚´ã§10ç¨®ã®ç”»åƒã‚’ç”¨æ„
 img = new Array();
 
 img[0] = "logo.jpg";
@@ -12,14 +12,14 @@ img[7] = "amamikogera.jpg";
 img[8] = "ryukyukogera.jpg";
 img[9] = "oirikogera.jpg";
 
-//2ƒZƒbƒg‚¸‚Â20–‡—pˆÓ
+//2ã‚»ãƒƒãƒˆãšã¤20æšç”¨æ„
 windows.onload = function () {
     let cards = [];
     for (let i = 0; i < 10; i++) {
         cards.push(i);
         cards.push(i);
     }
-    //ƒVƒƒƒbƒtƒ‹
+    //ã‚·ãƒ£ãƒƒãƒ•ãƒ«
     shuffle(cards);
     let panel = document.getElementById('panel');
     for (let i = 0; i < 20; i++) {
@@ -29,20 +29,18 @@ windows.onload = function () {
         div.onclick = flip;
         panel.appendChild(div);
     }
-    //ƒ^ƒCƒ}[
+    //ã‚¿ã‚¤ãƒãƒ¼
     let startTime;
-    let timer;
     startTime = new Date();
     stratTimer();
 }
 function shuffle(cards) {
     let n = cards.length;
-    for (let i = 0; i < n; i++) {
-        let r = i + Math.floor(Math.random() * (n - i));
-        let tmp = cards[i];
-        cards[i] = cards[r];
-        cards[r] = tmp;
+    while (n) {
+        i = Math.floor(Math.random() * n--);
+        [cards[n], cards[i]] = [cards[i], cards[n]]
     }
+    return cards;
 }
 function flip(crnt) {
     let div = crnt.target;
@@ -66,34 +64,33 @@ function flip(crnt) {
             backTimer = setTimeout(function () {
                 div.className = 'card finish';
                 cardFirst.className = 'card finish';
-                backTimer = null;
+                backTimer = NaN;
                 if (countUnit == 10) {
-                    clearTimeout(timer);
-                    let endTime = new Date();
-                    let elapsedTime = endTime - startTime;
-                    let sec = Math.floor(elapsedTime / 1000);
-                    let msec = elapsedTime % 1000;
-                    alert('ƒNƒŠƒAI' + sec + '•b');
-                } else {
-                    backTimer = setTimeout(function () {
-                        div.className = 'card back';
-                        div.innerHTML = '';
-                        cardFirst.className = 'card back';
-                        cardFirst.innerHTML = '';
-                        backTimer = null;
-                    }
-                        , 500);
+                    clearInterval(timer);
+                }
+            }, 500)
+        } else {
+            backTimer = setTimeout(function () {
+                div.className = 'card back';
+                div.innerHTML = '';
+                cardFirst.className = 'card back';
+                cardFirst.innerHTML = '';
+                cardFirst = null;
+                backTimer = NaN;
+            }
+                , 500);
+        }
                     flgFirst = true;
                 }
             }
 function startTimer() {
-                    timer = setTimeout(check, 1000);
+                    timer = setInterval(showSecond, 1000);
                 }
 function showSecond() {
-    let nowTime = new Date();
+                    let nowTime = new Date();
                     let elapsedTime = nowTime - startTime;
                     let sec = Math.floor(elapsedTime / 1000);
-                    let msec = elapsedTime % 1000;
-                    document.getElementById('time').textContent = sec + '.' + msec;
+    let cont = 'ã„ã¾' + elapsedTime + 'ç§’ã§ã™ â°âŠ–â°)ï¾‰';
+    let rslt = document.getElementById('result');
+    rslt.innerHTML = cont;
                 }
-}
