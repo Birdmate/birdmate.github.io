@@ -1,5 +1,4 @@
 //コゲラ亜種とWBSJロゴで10種の画像を用意
-
 img = new Array();
 
 img[0] = "logo.jpg";
@@ -14,7 +13,6 @@ img[8] = "ryukyukogera.jpg";
 img[9] = "oirikogera.jpg";
 
 //2セットずつ20枚用意
-
 windows.onload = function () {
     let cards = [];
     for (let i = 0; i < 10; i++) {
@@ -28,42 +26,74 @@ windows.onload = function () {
         let div = document.createElement('div');
         div.className = 'card-back';
         div.index = i;
-        div.onclick = function () {
-            flip(this);
-        };
+        div.onclick = flip;
         panel.appendChild(div);
     }
-    let score = 0;
-    let firstCard = null;
-    let flipTimerId = NaN;
-    function flip(card) {
-        if (flipTimerId) {
-            clearTimeout(flipTimerId);
-            flipTimerId = NaN;
-        }
-        if (card.innerHTML != '' || card == firstCard) {
-            return;
-        }
-        card.className = 'card-front';
-        card.innerHTML = '<img src="' + img[cards[card.index]] + '">';
-        if (firstCard == null) {
-            firstCard = card;
-        } else {
-            if (cards[firstCard.index] == cards[card.index]) {
-                score++;
-                firstCard = null;
-                if (score == 10) {
-                    alert('クリア！');
-                }
-            } else {
-                flipTimerId = setTimeout(function () {
-                    firstCard.className = 'card-back';
-                    card.className = 'card-back';
-                    firstCard.innerHTML = '';
-                    card.innerHTML = '';
-                    firstCard = null;
-                }, 500);
-            }
-        }
+    //タイマー
+    let startTime;
+    let timer;
+    startTime = new Date();
+    stratTimer();
+}
+function shuffle(cards) {
+    let n = cards.length;
+    for (let i = 0; i < n; i++) {
+        let r = i + Math.floor(Math.random() * (n - i));
+        let tmp = cards[i];
+        cards[i] = cards[r];
+        cards[r] = tmp;
     }
+}
+function flip(crnt) {
+    let div = crnt.target;
+    let backTimer;
+    if (backTimer) return;
+    if (div.innerHTML == '') {
+        div.className = 'card';
+        div.innerHTML = '<img src="' + img[cards[div.index]] + '">';
+    } else {
+        return
+    }
+    let flgFirst = true;
+    let cardFirst;
+    if (flgFirst) {
+        cardFirst = div;
+        flgFirst = false;
+    } else {
+        if (cardFirst.index == div.index) {
+            let countUnit = 0;
+            countUnit++;
+            backTimer = setTimeout(function () {
+                div.className = 'card finish';
+                cardFirst.className = 'card finish';
+                backTimer = null;
+                if (countUnit == 10) {
+                    clearTimeout(timer);
+                    let endTime = new Date();
+                    let elapsedTime = endTime - startTime;
+                    let sec = Math.floor(elapsedTime / 1000);
+                    let msec = elapsedTime % 1000;
+                    alert('クリア！' + sec + '秒');
+                } else {
+                    backTimer = setTimeout(function () {
+                        div.className = 'card back';
+                        div.innerHTML = '';
+                        cardFirst.className = 'card back';
+                        cardFirst.innerHTML = '';
+                        backTimer = null;
+                    }
+                        , 500);
+                    flgFirst = true;
+                }
+            }
+function startTimer() {
+                    timer = setTimeout(check, 1000);
+                }
+function showSecond() {
+    let nowTime = new Date();
+                    let elapsedTime = nowTime - startTime;
+                    let sec = Math.floor(elapsedTime / 1000);
+                    let msec = elapsedTime % 1000;
+                    document.getElementById('time').textContent = sec + '.' + msec;
+                }
 }
