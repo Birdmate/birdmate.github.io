@@ -84,8 +84,8 @@ function startStopGame(event) {
 
 function startGame() {
     if (!gameStarted) {
-        let stopButton = document.getElementById('stop'); // stopButton を定義する
         enableButtons();
+        let stopButton = document.getElementById('stop'); // stopButton を定義する
         initCards(); // カードを初期化する
         startTime = new Date();
         startTimer();
@@ -122,7 +122,7 @@ function flip(crnt) {
                 fstCardArea = div;
                 fstCard = false;
             } else {
-                if (fstCardArea && fstCardArea.number == div.number) { // fstCardArea が定義されているか確認
+                if (fstCardArea && fstCardArea.number !== undefined && fstCardArea.number == div.number) {
                     counter++;
                     flipTimer = setTimeout(function () {
                         div.className = 'card finish';
@@ -137,7 +137,7 @@ function flip(crnt) {
                     flipTimer = setTimeout(function () {
                         div.className = 'card back';
                         div.innerHTML = '';
-                        if (fstCardArea) { // fstCardArea が定義されているか確認
+                        if (fstCardArea) {
                             fstCardArea.className = 'card back';
                             fstCardArea.innerHTML = '';
                             fstCardArea = null;
