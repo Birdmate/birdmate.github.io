@@ -81,7 +81,7 @@ function flip(crnt) {
     } else {
         return
     }
-    if (flgFirst) {
+    if (fstCard) {
         fstCardArea = div;
         fstCard = false;
     } else { // ２枚目の処理
