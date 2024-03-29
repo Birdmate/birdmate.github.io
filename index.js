@@ -18,7 +18,7 @@ windows.onload = () => {
     iniCards();
     showTimer();
     let start = document.getElementById('start');
-    start.addEventListener('click',(ev) => gameStart()):
+    start.addEventListener('click',(ev) => gameStart());
 }
 
 function initCards() {
