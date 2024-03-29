@@ -45,12 +45,14 @@ function shuffle(cards) {
 }
 
 window.onload = () => {
+    initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
     start.addEventListener('click', startStopGame);
     stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
+    disableButtons();
 }
 
 function startStopGame(event) {
@@ -68,14 +70,9 @@ function startStopGame(event) {
 
 function startGame() {
     if (!gameStarted) {
-        initCards();
+        enableButtons();
         startTime = new Date();
         startTimer();
-        let startButton = document.getElementById('start');
-        startButton.textContent = 'リセット';
-        startButton.id = 'reset'; // IDを 'reset' に変更
-        let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ';
         gameStarted = true;
     }
 }
@@ -83,9 +80,7 @@ function startGame() {
 function stopGame() {
     if (gameStarted) {
         clearInterval(timer);
-        let stopButton = document.getElementById('stop');
-        stopButton.textContent = '再スタート';
-        stopButton.id = 'restart'; // IDを 'restart' に変更
+        disableButtons();
     }
 }
 
@@ -94,11 +89,6 @@ function restartGame() {
         initCards();
         // startTime を更新せず、以前の開始時刻から再開する
         startTimer();
-        let startButton = document.getElementById('start');
-        startButton.textContent = 'リセット';
-        startButton.id = 'reset'; // IDを 'reset' に変更
-        let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ';
     }
 }
 
@@ -161,18 +151,32 @@ function resetGame() {
     clearInterval(timer);
     initCards(); // ゲームを初期化
     startTime = null; // 開始時刻をリセット
-    let startButton = document.getElementById('start');
-    startButton.textContent = "スタート";
-    startButton.id = "start";
-    let stopButton = document.getElementById('stop');
-    stopButton.textContent = "ストップ";
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
     gameStarted = false;
+    disableButtons();
 }
 
 function finishGame() {
     let panel = document.getElementById('panel');
     panel.innerHTML = 'すごい！コゲラ仙人級です ⁰⊖⁰)ﾉ';
+}
+
+function enableButtons() {
+    let startButton = document.getElementById('start');
+    let stopButton = document.getElementById('stop');
+    let resetButton = document.getElementById('reset');
+    startButton.disabled = false;
+    stopButton.disabled = false;
+    resetButton.disabled = false;
+}
+
+function disableButtons() {
+    let startButton = document.getElementById('start');
+    let stopButton = document.getElementById('stop');
+    let resetButton = document.getElementById('reset');
+    startButton.disabled = true;
+    stopButton.disabled = true;
+    resetButton.disabled = true;
 }
