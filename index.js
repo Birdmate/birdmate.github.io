@@ -2,8 +2,10 @@ window.onload = () => {
     initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
-    start.addEventListener('click', startStopGame);
-    stop.addEventListener('click', startStopGame);
+    start.addEventListener('click', startGame);
+    stop.addEventListener('click', stopGame);
+    let reset = document.getElementById('reset');
+    reset.addEventListener('click', resetGame);
 }
 
 function startStopGame(event) {
@@ -39,10 +41,18 @@ function startGame() {
     initCards();
     startTime = new Date();
     startTimer();
+    let startButton = document.getElementById('start');
+    startButton.textContent = 'リセット';
+    startButton.id = 'reset'; // IDを 'reset' に変更
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = 'ストップ';
 }
 
 function stopGame() {
     clearInterval(timer);
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = '再スタート';
+    stopButton.id = 'restart'; // IDを 'restart' に変更
 }
 
 function restartGame() {
