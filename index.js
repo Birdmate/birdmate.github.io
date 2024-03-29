@@ -18,7 +18,11 @@ for (let i = 0; i < 10; i++) {
 window.onload = () => {
     initCards();
     let start = document.getElementById('start');
+    let stop = document.getElementById('stop');
     start.addEventListener('click', startGame);
+    stop.addEventListener('click', stopGame);
+    let reset = document.getElementById('reset');
+    reset.addEventListener('click', resetGame);
 }
 
 function initCards() {
@@ -49,15 +53,39 @@ function shuffle(cards) {
     return cards;
 }
 
+function startStopGame(event) {
+    let button = event.target;
+    if (button.id === 'start') { // スタートボタンがクリックされた場合
+        startGame();
+        button.textContent = 'リセット';
+        button.id = 'restart';
+    } else if (button.id === 'stop') { // ストップボタンがクリックされた場合
+        stopGame();
+        button.textContent = '再スタート';
+        button.id = 'restart';
+    } else if (button.id === 'restart') { // 再スタートボタンがクリックされた場合
+        restartGame();
+        button.textContent = 'ストップ';
+        button.id = 'stop';
+    }
+}
+
 function startGame() {
     initCards();
     // タイマー
     startTime = new Date();
     startTimer();
-    let reset = document.getElementById('reset');
-    reset.textContent = "リセット";
-    reset.removeEventListener('click', startGame); // 重複したイベントリスナーを削除
-    reset.addEventListener('click', resetGame); // Reset ボタンがクリックされた時に resetGame 関数を呼び出すイベントリスナーを追加
+}
+
+function stopGame() {
+    clearInterval(timer);
+}
+
+function restartGame() {
+    initCards();
+    // タイマー
+    startTime = new Date();
+    startTimer();
 }
 
 function flip(crnt) {
@@ -105,15 +133,15 @@ function showTimer() {
     let nowTime = new Date();
     let elapsedTime = nowTime - startTime;
     let sec = Math.floor(elapsedTime / 1000);
-    let cont = '経過時間: ' + sec + '秒';
+    let cont = 'プレイ時間: ' + sec + '秒';
     let result = document.getElementById('result');
     result.innerHTML = cont;
 }
 
 function resetGame() {
     clearInterval(timer);
-    let reset = document.getElementById('reset');
-    reset.textContent = "スタート！";
+    let reset = document.getElementById('start');
+    reset.textContent = "スタート";
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
