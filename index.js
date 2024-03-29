@@ -38,7 +38,7 @@ function initCards() {
 function shuffle(cards) {
     let n = cards.length;
     while (n) {
-        i = Math.floor(Math.random() * n--);
+        let i = Math.floor(Math.random() * n--);
         [cards[n], cards[i]] = [cards[i], cards[n]]
     }
     return cards;
