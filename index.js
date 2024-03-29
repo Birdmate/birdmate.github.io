@@ -1,86 +1,42 @@
-let startTime; // 開始時刻
-let timer; // タイマー
-let flipTimer; // 裏返し中タイマー
-let fstCard = true; // 1枚目判定
-let fstCardArea; // 1枚目の場所
-let counter = 0; // そろえた枚数
-
-let cardName = [
-    "logo", "ezokogera", "kogera", "miyakekogera",
-    "shikokukogera", "tsushimakogera", "kyushukogera",
-    "amamikogera", "ryukyukogera", "oirikogera"
-];
-let cardTag = [];
-for (let i = 0; i < 10; i++) {
-    cardTag.push("<img src='" + cardName[i] + ".jpg'>")
-}
-
 window.onload = () => {
     initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
-    start.addEventListener('click', startStopGame); // start ボタンにイベントリスナーを追加
-    stop.addEventListener('click', startStopGame); // stop ボタンにイベントリスナーを追加
-    let reset = document.getElementById('reset');
-    reset.addEventListener('click', resetGame);
-}
-
-function initCards() {
-    let cards = [];
-    for (let i = 0; i < 10; i++) {
-        cards.push(i);
-        cards.push(i);
-    }
-    // シャッフル
-    shuffle(cards);
-    let panel = document.getElementById('panel');
-    panel.innerHTML = ''; // パネルを初期化
-    for (let i = 0; i < 20; i++) {
-        let div = document.createElement('div');
-        div.className = 'card back';
-        div.number = cards[i];
-        div.onclick = flip;
-        panel.appendChild(div);
-    }
-}
-
-function shuffle(cards) {
-    let n = cards.length;
-    while (n) {
-        i = Math.floor(Math.random() * n--);
-        [cards[n], cards[i]] = [cards[i], cards[n]]
-    }
-    return cards;
+    start.addEventListener('click', startStopGame);
+    stop.addEventListener('click', startStopGame);
 }
 
 function startStopGame(event) {
     let button = event.target;
-    if (button.id === 'start') { // スタートボタンがクリックされた場合
+    if (button.id === 'start') {
         startGame();
         button.textContent = 'リセット';
-        button.id = 'reset'; // ボタンのIDを 'reset' に変更
+        button.id = 'reset';
         let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ'; // ストップボタンの名前を 'ストップ' に変更
-    } else if (button.id === 'stop') { // ストップボタンがクリックされた場合
+        stopButton.textContent = 'ストップ';
+    } else if (button.id === 'stop') {
         stopGame();
         button.textContent = '再スタート';
-        button.id = 'restart'; // ボタンのIDを 'restart' に変更
-    } else if (button.id === 'restart') { // 再スタートボタンがクリックされた場合
+        button.id = 'restart';
+        let startButton = document.getElementById('start');
+        startButton.textContent = 'スタート';
+    } else if (button.id === 'restart') {
         restartGame();
         button.textContent = 'ストップ';
-        button.id = 'stop'; // ボタンのIDを 'stop' に変更
-    } else if (button.id === 'reset') { // リセットボタンがクリックされた場合
+        button.id = 'stop';
+        let startButton = document.getElementById('start');
+        startButton.textContent = 'リセット';
+    } else if (button.id === 'reset') {
         resetGame();
         button.textContent = 'スタート';
-        button.id = 'start'; // ボタンのIDを 'start' に変更
+        button.id = 'start';
         let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ'; // ストップボタンの名前を 'ストップ' に変更
+        stopButton.textContent = 'ストップ';
     }
 }
 
 function startGame() {
     initCards();
-    // タイマー
     startTime = new Date();
     startTimer();
 }
@@ -91,9 +47,6 @@ function stopGame() {
 
 function restartGame() {
     initCards();
-    // タイマー
-    startTime = new Date();
-    startTimer();
 }
 
 function flip(crnt) {
@@ -103,7 +56,7 @@ function flip(crnt) {
         div.className = 'card';
         div.innerHTML = cardTag[div.number];
     } else {
-        return
+        return;
     }
     if (fstCard) {
         fstCardArea = div;
@@ -118,7 +71,7 @@ function flip(crnt) {
                 if (counter == 10) {
                     clearInterval(timer);
                 }
-            }, 500)
+            }, 500);
         } else {
             flipTimer = setTimeout(function () {
                 div.className = 'card back';
