@@ -128,16 +128,6 @@ function showTimer() {
     result.innerHTML = cont;
 }
 
-function resetGame() {
-    clearInterval(timer);
-    initCards(); // ゲームを初期化
-    startTime = null; // 開始時刻をリセット
-    let result = document.getElementById('result');
-    result.innerHTML = '';
-    counter = 0;
-    gameStarted = false;
-}
-
 function finishGame() {
     let panel = document.getElementById('panel');
     panel.innerHTML = 'すごい！コゲラ仙人級です ⁰⊖⁰)ﾉ';
