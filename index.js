@@ -14,8 +14,8 @@ for (let i = 0; i < 10; i++) {
     cardTag.push("<img src='" + cardName[i] + ".jpg'>")
 }
 
-windows.onload = () => {
-    iniCards();
+window.onload = () => {
+    initCards();
     showTimer();
     let start = document.getElementById('start');
     start.addEventListener('click',(ev) => gameStart());
@@ -48,13 +48,12 @@ function shuffle(cards) {
     return cards;
 }
 
-function gameStart()[
+function gameStart(){
     initCards();
     //タイマー
     startTime = new Date();
-    stratTimer();
-const start = getElementByID('start');
-start.addEventListener('click', () => {
+    startTimer();
+　　start.addEventListener('click', () => {
     gameStart();
     start.textContent = "リプレイ";
 ]
