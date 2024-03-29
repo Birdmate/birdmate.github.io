@@ -122,7 +122,7 @@ function flip(crnt) {
                 fstCardArea = div;
                 fstCard = false;
             } else {
-                if (fstCardArea.number == div.number) {
+                if (fstCardArea && fstCardArea.number == div.number) { // fstCardArea が定義されているか確認
                     counter++;
                     flipTimer = setTimeout(function () {
                         div.className = 'card finish';
@@ -137,9 +137,11 @@ function flip(crnt) {
                     flipTimer = setTimeout(function () {
                         div.className = 'card back';
                         div.innerHTML = '';
-                        fstCardArea.className = 'card back';
-                        fstCardArea.innerHTML = '';
-                        fstCardArea = null;
+                        if (fstCardArea) { // fstCardArea が定義されているか確認
+                            fstCardArea.className = 'card back';
+                            fstCardArea.innerHTML = '';
+                            fstCardArea = null;
+                        }
                         flipTimer = NaN;
                     }, 500);
                 }
