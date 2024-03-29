@@ -19,8 +19,8 @@ window.onload = () => {
     initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
-    start.addEventListener('click', startGame);
-    stop.addEventListener('click', stopGame);
+    start.addEventListener('click', startStopGame); // start ボタンにイベントリスナーを追加
+    stop.addEventListener('click', startStopGame); // stop ボタンにイベントリスナーを追加
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
 }
