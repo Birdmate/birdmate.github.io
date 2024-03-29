@@ -71,43 +71,46 @@ function resetGame() {
     gameStarted = false;
 }
 
+if (gameStarted) {
 function flip(crnt) {
-    if (gameStarted) {
-        let div = crnt.target;
-        if (flipTimer) return;
-        if (div.innerHTML == '') {
-            div.className = 'card';
-            div.innerHTML = cardTag[div.number];
-        } else {
-            return;
-        }
-        if (fstCardArea) { // fstCardAreaがnullまたはundefinedでないことを確認
-            if (fstCardArea.number == div.number) {
-                counter++;
-                flipTimer = setTimeout(function () {
-                    div.className = 'card finish';
-                    fstCardArea.className = 'card finish';
-                    flipTimer = NaN;
-                    if (counter == 10) {
-                        clearInterval(timer);
-                        //setInterval(showSecond, 1000)
-                    }
-                }, 500)
-            } else {
-                flipTimer = setTimeout(function () {
-                    div.className = 'card back';
-                    div.innerHTML = '';
-                    fstCardArea.className = 'card back';
-                    fstCardArea.innerHTML = '';
-                    fstCardArea = null;
-                    flipTimer = NaN;
-                }, 500);
-            }
-            fstCardArea = null; // fstCardAreaをリセット
-        } else {
-            fstCardArea = div; // fstCardAreaがnullまたはundefinedの場合、現在のカードをセット
-        }
+    let div = crnt.target; //クリックしたカード
+    // カードのタイマー処理が動作中は return
+    if (flipTimer) return; //連続で押せないように
+    // 裏向きのカードをクリックした場合は画像を表示する
+    if (div.innerHTML == '') {
+        div.className = 'card'; //backというクラス名を取り除いた
+        div.innerHTML = cardTag[div.number];
+    } else {
+        return // 数字が表示されているカードは return
     }
+    if (fstCard) { // 1枚目の処理 一枚目ならtrue
+        fstCardArea = div;  //最初にクリックしたカード
+        fstCard = false; //次は２枚目だから
+    } else { // ２枚目の処理
+        if (fstCardArea.number == div.number) {
+            counter++; //揃ったペアの数
+            flapTimer = setTimeout(function () {
+                div.className = 'card finish'; //0.5秒で透明
+                fstCardArea.className = 'card finish';
+                flapTimer = NaN;
+                if (counter == 10) { //すべてカードが揃ったら
+                    clearInterval(timer);  // timer終了
+                    //setInterval(showSecond, 1000)
+                }
+            }, 500)
+        } else {
+            flipTimer = setTimeout(function () {
+                div.className = 'card back';
+                div.innerHTML = ''; // カードを裏側に戻す
+                fstCardArea.className = 'card back';
+                fstCardArea.innerHTML = '';
+                fstCardArea = null;
+                flipTimer = NaN;
+            }, 500);
+        }
+        fstCard = true;
+    }
+}
 }
 
 function startTimer() {
