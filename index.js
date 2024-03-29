@@ -48,10 +48,8 @@ window.onload = () => {
     initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
-    start.addEventListener('click', startStopGame);
-    stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
-    reset.addEventListener('click', resetGame);
+    start.addEventListener('click', startStopGame);
     disableButtons();
 }
 
@@ -75,8 +73,12 @@ function startStopGame(event) {
         startGame();
     } else if (button.id === 'stop') {
         stopGame();
+        button.textContent = '再スタート';
+        button.id = 'restart';
     } else if (button.id === 'restart') {
         restartGame();
+        button.textContent = 'ストップ';
+        button.id = 'stop';
     } else if (button.id === 'reset') {
         resetGame();
     }
@@ -85,7 +87,7 @@ function startStopGame(event) {
 function startGame() {
     if (!gameStarted) {
         enableButtons();
-        let stopButton = document.getElementById('stop'); // stopButton を定義する
+        let stopButton = document.getElementById('stop');
         initCards(); // カードを初期化する
         startTime = new Date();
         startTimer();
