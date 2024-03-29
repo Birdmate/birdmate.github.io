@@ -101,8 +101,11 @@ function showTimer() {
 
 function resetGame() {
     clearInterval(timer);
-    let reset = document.getElementById('start');
-    reset.textContent = "スタート";
+    let startButton = document.getElementById('start');
+    startButton.textContent = "スタート";
+    startButton.id = "start";
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = "ストップ";
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
