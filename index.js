@@ -76,42 +76,40 @@ function flip(crnt) {
         let div = crnt.target;
         if (flipTimer || div.className === 'card finish') return;
         if (div.classList.contains('card')) {
-            if (div.innerHTML == '') {
+            if (fstCard && fstCardArea !== div) {
+                // 2枚目のカードが選択された場合
                 div.className = 'card';
                 div.innerHTML = cardTag[div.number];
-            } else {
-                return;
-            }
-            if (fstCard) {
-                fstCardArea = div;
-                fstCard = false;
-            } else {
-                if (fstCardArea && fstCardArea.number !== undefined && fstCardArea.number == div.number) {
+                if (fstCardArea.number === div.number) {
+                    // 絵柄が一致した場合
                     counter++;
                     flipTimer = setTimeout(function () {
                         div.className = 'card finish';
                         fstCardArea.className = 'card finish';
-                        fstCardArea.style.visibility = 'hidden'; // カードを非表示にする
-                        div.style.visibility = 'hidden'; // カードを非表示にする
-                        flipTimer = NaN;
+                        flipTimer = null;
                         if (counter == 10) {
                             clearInterval(timer);
                             finishGame();
                         }
                     }, 500);
                 } else {
+                    // 絵柄が一致しなかった場合
                     flipTimer = setTimeout(function () {
                         div.className = 'card back';
                         div.innerHTML = '';
-                        if (fstCardArea) {
-                            fstCardArea.className = 'card back';
-                            fstCardArea.innerHTML = '';
-                            fstCardArea = null;
-                        }
-                        flipTimer = NaN;
+                        fstCardArea.className = 'card back';
+                        fstCardArea.innerHTML = '';
+                        flipTimer = null;
                     }, 500);
                 }
+                fstCard = false;
+                fstCardArea = null;
+            } else {
+                // 1枚目のカードが選択された場合
+                div.className = 'card';
+                div.innerHTML = cardTag[div.number];
                 fstCard = true;
+                fstCardArea = div;
             }
         }
     }
