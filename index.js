@@ -51,8 +51,6 @@ window.onload = () => {
     stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
-    stop.style.display = 'none'; // 初期状態ではストップボタンを非表示にする
-    reset.style.display = 'none'; // 初期状態ではリセットボタンを非表示にする
 }
 
 function startStopGame(event) {
@@ -62,21 +60,25 @@ function startStopGame(event) {
         button.textContent = 'リセット';
         button.id = 'reset';
         let stopButton = document.getElementById('stop');
-        stopButton.style.display = 'inline-block'; // スタートボタンを押した時にストップボタンを表示する
+        stopButton.textContent = 'ストップ';
     } else if (button.id === 'stop') {
         stopGame();
         button.textContent = '再スタート';
         button.id = 'restart';
+        let startButton = document.getElementById('start');
+        startButton.textContent = 'スタート';
     } else if (button.id === 'restart') {
         restartGame();
         button.textContent = 'ストップ';
         button.id = 'stop';
+        let startButton = document.getElementById('start');
+        startButton.textContent = 'リセット';
     } else if (button.id === 'reset') {
         resetGame();
         button.textContent = 'スタート';
         button.id = 'start';
         let stopButton = document.getElementById('stop');
-        stopButton.style.display = 'none'; // リセットボタンを押した時にストップボタンを非表示にする
+        stopButton.textContent = 'ストップ';
     }
 }
 
@@ -84,10 +86,18 @@ function startGame() {
     initCards();
     startTime = new Date();
     startTimer();
+    let startButton = document.getElementById('start');
+    startButton.textContent = 'リセット';
+    startButton.id = 'reset'; // IDを 'reset' に変更
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = 'ストップ';
 }
 
 function stopGame() {
     clearInterval(timer);
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = '再スタート';
+    stopButton.id = 'restart'; // IDを 'restart' に変更
 }
 
 function restartGame() {
@@ -117,6 +127,7 @@ function flip(crnt) {
                 flipTimer = NaN;
                 if (counter == 10) {
                     clearInterval(timer);
+                    finishGame();
                 }
             }, 500);
         } else {
@@ -150,7 +161,17 @@ function resetGame() {
     clearInterval(timer);
     initCards(); // ゲームを初期化
     startTime = null; // 開始時刻をリセット
+    let startButton = document.getElementById('start');
+    startButton.textContent = "スタート";
+    startButton.id = "start";
+    let stopButton = document.getElementById('stop');
+    stopButton.textContent = "ストップ";
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
+}
+
+function finishGame() {
+    let panel = document.getElementById('panel');
+    panel.innerHTML = 'すごい！コゲラ仙人級です ⁰⊖⁰)ﾉ';
 }
