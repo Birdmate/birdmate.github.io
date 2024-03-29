@@ -2,8 +2,8 @@ window.onload = () => {
     initCards();
     let start = document.getElementById('start');
     let stop = document.getElementById('stop');
-    start.addEventListener('click', startGame);
-    stop.addEventListener('click', stopGame);
+    start.addEventListener('click', startStopGame);
+    stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
 }
