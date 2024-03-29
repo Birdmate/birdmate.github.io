@@ -71,8 +71,8 @@ function resetGame() {
     gameStarted = false;
 }
 
-if (gameStarted) {
 function flip(crnt) {
+if (gameStarted) {
     let div = crnt.target; //クリックしたカード
     // カードのタイマー処理が動作中は return
     if (flipTimer) return; //連続で押せないように
