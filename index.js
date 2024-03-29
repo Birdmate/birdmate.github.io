@@ -46,44 +46,11 @@ function shuffle(cards) {
 
 window.onload = () => {
     initCards();
-    let start = document.getElementById('start');
-    let stop = document.getElementById('stop');
-    let reset = document.getElementById('reset');
-    start.addEventListener('click', startStopGame);
-    disableButtons();
-}
-
-function disableButtons() {
-    let stopButton = document.getElementById('stop');
-    let resetButton = document.getElementById('reset');
-    stopButton.disabled = true;
-    resetButton.disabled = true;
-}
-
-function enableButtons() {
-    let stopButton = document.getElementById('stop');
-    let resetButton = document.getElementById('reset');
-    stopButton.disabled = false;
-    resetButton.disabled = false;
-}
-
-function startStopGame(event) {
-    let button = event.target;
-    if (button.id === 'start') {
-        startGame();
-    } else if (button.id === 'stop') {
-        stopGame();
-    } else if (button.id === 'restart') {
-        restartGame();
-    } else if (button.id === 'reset') {
-        resetGame();
-    }
+    start.addEventListener('click', startGame);
 }
 
 function startGame() {
     if (!gameStarted) {
-        enableButtons();
-        let stopButton = document.getElementById('stop');
         initCards(); // カードを初期化する
         startTime = new Date();
         startTimer();
@@ -91,23 +58,12 @@ function startGame() {
     }
 }
 
-function stopGame() {
-    if (gameStarted) {
-        clearInterval(timer);
-        let restartButton = document.getElementById('restart');
-        restartButton.textContent = '再スタート';
-        restartButton.id = 'restart';
-    }
-}
 
 function restartGame() {
     if (gameStarted) {
         initCards();
         // startTime を更新せず、以前の開始時刻から再開する
         startTimer();
-        let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ';
-        stopButton.id = 'stop';
     }
 }
 
@@ -178,7 +134,6 @@ function resetGame() {
     result.innerHTML = '';
     counter = 0;
     gameStarted = false;
-    disableButtons();
 }
 
 function finishGame() {
