@@ -102,6 +102,7 @@ function flip(crnt) {
                         flipTimer = null;
                     }, 500);
                 }
+                // 1枚目のカードのフラグと場所をリセット
                 fstCard = false;
                 fstCardArea = null;
             } else {
