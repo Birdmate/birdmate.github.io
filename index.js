@@ -105,7 +105,7 @@ function restartGame() {
 function flip(crnt) {
     if (gameStarted) {
         let div = crnt.target;
-        if (flipTimer) return;
+        if (flipTimer || div.className === 'card finish') return;
         if (div.innerHTML == '') {
             div.className = 'card';
             div.innerHTML = cardTag[div.number];
@@ -113,20 +113,15 @@ function flip(crnt) {
             return;
         }
         if (fstCard) {
-            fstCardArea = div;
-            fstCard = false;
-        } else {
-            if (fstCardArea.number == div.number) {
+            if (fstCardArea.number === div.number) {
                 counter++;
-                flipTimer = setTimeout(function () {
-                    div.className = 'card finish';
-                    fstCardArea.className = 'card finish';
-                    flipTimer = NaN;
-                    if (counter == 10) {
-                        clearInterval(timer);
-                        finishGame();
-                    }
-                }, 500);
+                div.className = 'card finish';
+                fstCardArea.className = 'card finish';
+                fstCardArea = null;
+                if (counter === 10) {
+                    clearInterval(timer);
+                    finishGame();
+                }
             } else {
                 flipTimer = setTimeout(function () {
                     div.className = 'card back';
@@ -134,9 +129,12 @@ function flip(crnt) {
                     fstCardArea.className = 'card back';
                     fstCardArea.innerHTML = '';
                     fstCardArea = null;
-                    flipTimer = NaN;
+                    flipTimer = null;
                 }, 500);
             }
+            fstCard = false;
+        } else {
+            fstCardArea = div;
             fstCard = true;
         }
     }
