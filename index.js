@@ -1,13 +1,14 @@
-let startTime;//開始時刻
-let timer;//タイマー
-let flipTimer;//裏返し中タイマー
-let fstCard = true;//1枚目判定
-let fstCardArea;//1枚目の場所
-let counter = 0;//そろえた枚数
+let startTime; // 開始時刻
+let timer; // タイマー
+let flipTimer; // 裏返し中タイマー
+let fstCard = true; // 1枚目判定
+let fstCardArea; // 1枚目の場所
+let counter = 0; // そろえた枚数
 
 let cardName = [
-    "logo", "ezokogera", "kogera", "miyakekogera", "shikokukogera",
-    "tsushimakogera", "kyushukogera", "amamikogera", "ryukyukogera", "oirikogera"
+    "logo", "ezokogera", "kogera", "miyakekogera",
+    "shikokukogera", "tsushimakogera", "kyushukogera",
+    "amamikogera", "ryukyukogera", "oirikogera"
 ];
 let cardTag = [];
 for (let i = 0; i < 10; i++) {
@@ -16,9 +17,10 @@ for (let i = 0; i < 10; i++) {
 
 window.onload = () => {
     initCards();
-    showTimer();
     let start = document.getElementById('start');
-    start.addEventListener('click',ev => gameStart());
+    start.addEventListener('click', ev => startGame());
+    let reset = document.getElementById('reset');
+    reset.addEventListener('click', ev => resetGame());
 }
 
 function initCards() {
@@ -27,9 +29,10 @@ function initCards() {
         cards.push(i);
         cards.push(i);
     }
-    //シャッフル
+    // シャッフル
     shuffle(cards);
     let panel = document.getElementById('panel');
+    panel.innerHTML = ''; // パネルをリセット
     for (let i = 0; i < 20; i++) {
         let div = document.createElement('div');
         div.className = 'card back';
@@ -48,16 +51,11 @@ function shuffle(cards) {
     return cards;
 }
 
-function gameStart() {
+function startGame() {
     initCards();
-    //タイマー
+    // タイマー
     startTime = new Date();
     startTimer();
-    const start = document.getElementById('start');
-    start.addEventListener('click', () => {
-        gameStart();
-        start.textContent = "リプレイ";
-    });
 }
 
 function flip(crnt) {
@@ -77,7 +75,7 @@ function flip(crnt) {
             counter++;
             flipTimer = setTimeout(function () {
                 div.className = 'card finish';
-                fstCard.className = 'card finish';
+                fstCardArea.className = 'card finish';
                 flipTimer = NaN;
                 if (counter == 10) {
                     clearInterval(timer);
@@ -87,24 +85,33 @@ function flip(crnt) {
             flipTimer = setTimeout(function () {
                 div.className = 'card back';
                 div.innerHTML = '';
-                fstCard.className = 'card back';
-                fstCard.innerHTML = '';
+                fstCardArea.className = 'card back';
+                fstCardArea.innerHTML = '';
                 fstCardArea = null;
                 flipTimer = NaN;
-            }
-                , 500);
+            }, 500);
         }
         fstCard = true;
     }
 }
+
 function startTimer() {
     timer = setInterval(showTimer, 1000);
 }
+
 function showTimer() {
     let nowTime = new Date();
     let elapsedTime = nowTime - startTime;
     let sec = Math.floor(elapsedTime / 1000);
-    let cont = 'いま' + elapsedTime + '秒です ⁰⊖⁰)ﾉ';
+    let cont = 'プレイ時間：' + sec + '秒';
     let result = document.getElementById('result');
     result.innerHTML = cont;
+}
+
+function resetGame() {
+    clearInterval(timer); // タイマーを停止
+    let result = document.getElementById('result');
+    result.innerHTML = ''; // 経過時間をクリア
+    initCards(); // ゲームをリセット
+    counter = 0; // カウンターをリセット
 }
