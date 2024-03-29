@@ -1,19 +1,27 @@
-let startTime;
-let timer;
-let backTimer;
-let flgFirst = true;
-let cardFirst;
-let countUnit = 0;
+let startTime;//開始時刻
+let timer;//タイマー
+let flipTimer;//裏返し中タイマー
+let fstCard = true;//1枚目判定
+let fstCardArea;//1枚目の場所
+let counter = 0;//そろえた枚数
 
-let cardname = [
+let cardName = [
     "logo", "ezokogera", "kogera", "miyakekogera", "shikokukogera",
     "tsushimakogera", "kyushukogera", "amamikogera", "ryukyukogera", "oirikogera"
 ];
-let cardtag = [];
+let cardTag = [];
 for (let i = 0; i < 10; i++) {
-    cardtag.push("<img src='" + cardname[i] + ".jpg'>")
+    cardTag.push("<img src='" + cardName[i] + ".jpg'>")
 }
-window.onload = function () {
+
+windows.onload = () => {
+    iniCards();
+    showTimer();
+    let start = document.getElementById('start');
+    start.interHTML = 'スタート！';
+    start.addEventListener('click',(ev) => gameStart()):
+}
+
 function initCards() {
     let cards = [];
     for (let i = 0; i < 10; i++) {
@@ -31,6 +39,7 @@ function initCards() {
         panel.appendChild(div);
     }
 }
+
 function shuffle(cards) {
     let n = cards.length;
     while (n) {
@@ -39,58 +48,56 @@ function shuffle(cards) {
     }
     return cards;
 }
+
 function flip(crnt) {
     let div = crnt.target;
-    if (backTimer) return;
+    if (flipTimer) return;
     if (div.innerHTML == '') {
         div.className = 'card';
-        div.innerHTML = cardtag[div.number];
+        div.innerHTML = cardTag[div.number];
     } else {
         return
     }
-    if (flgFirst) {
-        cardFirst = div;
-        flgFirst = false;
+    if (fstCard) {
+        fstCardArea = div;
+        fstCard = false;
     } else {
-        if (cardFirst.number == div.number) {
-            countUnit++;
-            backTimer = setTimeout(function () {
+        if (fstCardArea.number == div.number) {
+            counter++;
+            flipTimer = setTimeout(function () {
                 div.className = 'card finish';
-                cardFirst.className = 'card finish';
-                backTimer = NaN;
-                if (countUnit == 10) {
+                fstCard.className = 'card finish';
+                flipTimer = NaN;
+                if (counter == 10) {
                     clearInterval(timer);
                 }
             }, 500)
         } else {
-            backTimer = setTimeout(function () {
+            flipTimer = setTimeout(function () {
                 div.className = 'card back';
                 div.innerHTML = '';
-                cardFirst.className = 'card back';
-                cardFirst.innerHTML = '';
-                cardFirst = null;
-                backTimer = NaN;
+                fstCard.className = 'card back';
+                fstCard.innerHTML = '';
+                fstCardArea = null;
+                flipTimer = NaN;
             }
                 , 500);
         }
-        flgFirst = true;
+        fstCard = true;
     }
 }
 function startTimer() {
-    timer = setInterval(showSecond, 1000);
+    timer = setInterval(showTimer, 1000);
 }
-function showSecond() {
+function showTimer() {
     let nowTime = new Date();
     let elapsedTime = nowTime - startTime;
     let sec = Math.floor(elapsedTime / 1000);
     let cont = 'いま' + elapsedTime + '秒です ⁰⊖⁰)ﾉ';
-    let rslt = document.getElementById('result');
-    rslt.innerHTML = cont;
+    let result = document.getElementById('result');
+    result.innerHTML = cont;
 }
-window.onload = () => {
-    start.interHTML = 'スタート！';
-    initCards();
-}
+
 start.addEventListener('click', () => {
     initCards();
     //タイマー
