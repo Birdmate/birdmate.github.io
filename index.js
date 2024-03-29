@@ -46,7 +46,10 @@ function shuffle(cards) {
 
 window.onload = () => {
     initCards();
-    start.addEventListener('click', startGame);
+    let startButton = document.getElementById('start');
+    let resetButton = document.getElementById('reset');
+    startButton.addEventListener('click', startGame);
+    resetButton.addEventListener('click', resetGame);
 }
 
 function startGame() {
@@ -58,13 +61,14 @@ function startGame() {
     }
 }
 
-
-function restartGame() {
-    if (gameStarted) {
-        initCards();
-        // startTime を更新せず、以前の開始時刻から再開する
-        startTimer();
-    }
+function resetGame() {
+    clearInterval(timer);
+    initCards(); // ゲームを初期化
+    startTime = null; // 開始時刻をリセット
+    let result = document.getElementById('result');
+    result.innerHTML = '';
+    counter = 0;
+    gameStarted = false;
 }
 
 function flip(crnt) {
