@@ -18,7 +18,6 @@ windows.onload = () => {
     iniCards();
     showTimer();
     let start = document.getElementById('start');
-    start.interHTML = 'スタート！';
     start.addEventListener('click',(ev) => gameStart()):
 }
 
@@ -48,6 +47,17 @@ function shuffle(cards) {
     }
     return cards;
 }
+
+function gameStart()[
+    initCards();
+    //タイマー
+    startTime = new Date();
+    stratTimer();
+const start = getElementByID('start');
+start.addEventListener('click', () => {
+    gameStart();
+    start.textContent = "リプレイ";
+]
 
 function flip(crnt) {
     let div = crnt.target;
@@ -96,12 +106,4 @@ function showTimer() {
     let cont = 'いま' + elapsedTime + '秒です ⁰⊖⁰)ﾉ';
     let result = document.getElementById('result');
     result.innerHTML = cont;
-}
-
-start.addEventListener('click', () => {
-    initCards();
-    //タイマー
-    startTime = new Date();
-    stratTimer();
-    start.interHTML = "リプレイ";
 }
