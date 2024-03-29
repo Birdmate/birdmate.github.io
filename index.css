@@ -34,6 +34,10 @@ img {
     cursor: default;
 }
 
+#buttons {
+    margin-top: 20px;
+}
+
 button {
-    margin-right: 10px;
+    margin-right: 20px;
 }
