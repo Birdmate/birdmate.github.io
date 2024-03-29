@@ -84,6 +84,7 @@ function startStopGame(event) {
 
 function startGame() {
     if (!gameStarted) {
+        let stopButton = document.getElementById('stop'); // stopButton を定義する
         enableButtons();
         initCards(); // カードを初期化する
         startTime = new Date();
