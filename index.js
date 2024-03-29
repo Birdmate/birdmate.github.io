@@ -73,12 +73,8 @@ function startStopGame(event) {
         startGame();
     } else if (button.id === 'stop') {
         stopGame();
-        button.textContent = '再スタート';
-        button.id = 'restart';
     } else if (button.id === 'restart') {
         restartGame();
-        button.textContent = 'ストップ';
-        button.id = 'stop';
     } else if (button.id === 'reset') {
         resetGame();
     }
@@ -98,6 +94,9 @@ function startGame() {
 function stopGame() {
     if (gameStarted) {
         clearInterval(timer);
+        let restartButton = document.getElementById('restart');
+        restartButton.textContent = '再スタート';
+        restartButton.id = 'restart';
     }
 }
 
@@ -106,6 +105,9 @@ function restartGame() {
         initCards();
         // startTime を更新せず、以前の開始時刻から再開する
         startTimer();
+        let stopButton = document.getElementById('stop');
+        stopButton.textContent = 'ストップ';
+        stopButton.id = 'stop';
     }
 }
 
@@ -129,8 +131,8 @@ function flip(crnt) {
                     flipTimer = setTimeout(function () {
                         div.className = 'card finish';
                         fstCardArea.className = 'card finish';
-                        div.style.visibility = 'hidden'; // カードを非表示にする
                         fstCardArea.style.visibility = 'hidden'; // カードを非表示にする
+                        div.style.visibility = 'hidden'; // カードを非表示にする
                         flipTimer = NaN;
                         if (counter == 10) {
                             clearInterval(timer);
