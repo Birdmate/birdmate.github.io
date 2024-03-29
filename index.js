@@ -1,3 +1,48 @@
+let startTime; // 開始時刻
+let timer; // タイマー
+let flipTimer; // 裏返し中タイマー
+let fstCard = false; // ゲームが開始されているかどうかを示すフラグ
+let fstCardArea; // 1枚目の場所
+let counter = 0; // そろえた枚数
+
+let cardName = [
+    "logo", "ezokogera", "kogera", "miyakekogera",
+    "shikokukogera", "tsushimakogera", "kyushukogera",
+    "amamikogera", "ryukyukogera", "oirikogera"
+];
+let cardTag = [];
+for (let i = 0; i < 10; i++) {
+    cardTag.push("<img src='" + cardName[i] + ".jpg'>")
+}
+
+function initCards() {
+    let cards = [];
+    for (let i = 0; i < 10; i++) {
+        cards.push(i);
+        cards.push(i);
+    }
+    // シャッフル
+    shuffle(cards);
+    let panel = document.getElementById('panel');
+    panel.innerHTML = ''; // パネルを初期化
+    for (let i = 0; i < 20; i++) {
+        let div = document.createElement('div');
+        div.className = 'card back';
+        div.number = cards[i];
+        div.onclick = flip;
+        panel.appendChild(div);
+    }
+}
+
+function shuffle(cards) {
+    let n = cards.length;
+    while (n) {
+        i = Math.floor(Math.random() * n--);
+        [cards[n], cards[i]] = [cards[i], cards[n]]
+    }
+    return cards;
+}
+
 window.onload = () => {
     initCards();
     let start = document.getElementById('start');
@@ -6,6 +51,8 @@ window.onload = () => {
     stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
+    stop.style.display = 'none'; // 初期状態ではストップボタンを非表示にする
+    reset.style.display = 'none'; // 初期状態ではリセットボタンを非表示にする
 }
 
 function startStopGame(event) {
@@ -15,25 +62,21 @@ function startStopGame(event) {
         button.textContent = 'リセット';
         button.id = 'reset';
         let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ';
+        stopButton.style.display = 'inline-block'; // スタートボタンを押した時にストップボタンを表示する
     } else if (button.id === 'stop') {
         stopGame();
         button.textContent = '再スタート';
         button.id = 'restart';
-        let startButton = document.getElementById('start');
-        startButton.textContent = 'スタート';
     } else if (button.id === 'restart') {
         restartGame();
         button.textContent = 'ストップ';
         button.id = 'stop';
-        let startButton = document.getElementById('start');
-        startButton.textContent = 'リセット';
     } else if (button.id === 'reset') {
         resetGame();
         button.textContent = 'スタート';
         button.id = 'start';
         let stopButton = document.getElementById('stop');
-        stopButton.textContent = 'ストップ';
+        stopButton.style.display = 'none'; // リセットボタンを押した時にストップボタンを非表示にする
     }
 }
 
@@ -41,18 +84,10 @@ function startGame() {
     initCards();
     startTime = new Date();
     startTimer();
-    let startButton = document.getElementById('start');
-    startButton.textContent = 'リセット';
-    startButton.id = 'reset'; // IDを 'reset' に変更
-    let stopButton = document.getElementById('stop');
-    stopButton.textContent = 'ストップ';
 }
 
 function stopGame() {
     clearInterval(timer);
-    let stopButton = document.getElementById('stop');
-    stopButton.textContent = '再スタート';
-    stopButton.id = 'restart'; // IDを 'restart' に変更
 }
 
 function restartGame() {
@@ -115,11 +150,6 @@ function resetGame() {
     clearInterval(timer);
     initCards(); // ゲームを初期化
     startTime = null; // 開始時刻をリセット
-    let startButton = document.getElementById('start');
-    startButton.textContent = "スタート";
-    startButton.id = "start";
-    let stopButton = document.getElementById('stop');
-    stopButton.textContent = "ストップ";
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
