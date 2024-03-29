@@ -73,47 +73,42 @@ function resetGame() {
 
 function flip(crnt) {
     if (gameStarted) {
-        let div = crnt.target;
-        if (flipTimer || div.className === 'card finish') return;
-        if (div.classList.contains('card')) {
-            if (fstCard && fstCardArea !== div) {
-                // 2枚目のカードが選択された場合
-                div.className = 'card';
-                div.innerHTML = cardTag[div.number];
-                if (fstCardArea.number === div.number) {
-                    // 絵柄が一致した場合
-                    counter++;
-                    flipTimer = setTimeout(function () {
-                        div.className = 'card finish';
-                        fstCardArea.className = 'card finish';
-                        flipTimer = null;
-                        if (counter == 10) {
-                            clearInterval(timer);
-                            finishGame();
-                        }
-                    }, 500);
-                } else {
-                    // 絵柄が一致しなかった場合
-                    flipTimer = setTimeout(function () {
-                        div.className = 'card back';
-                        div.innerHTML = '';
-                        fstCardArea.className = 'card back';
-                        fstCardArea.innerHTML = '';
-                        flipTimer = null;
-                    }, 500);
-                }
-                // 1枚目のカードのフラグと場所をリセット
-                fstCard = false;
-                fstCardArea = null;
-            } else {
-                // 1枚目のカードが選択された場合
-                div.className = 'card';
-                div.innerHTML = cardTag[div.number];
-                fstCard = true;
-                fstCardArea = div;
-            }
-        }
+    let div = crnt.target;
+    if (flipTimer) return;
+    if (div.innerHTML == '') {
+        div.className = 'card';
+        div.innerHTML = cardTag[div.number];
+    } else {
+        return
     }
+    if (flgFirst) {
+        fstCardArea = div;
+        fstCard = false;
+    } else { // ２枚目の処理
+        if (fstCardArea.number == div.number) {
+            counter++;
+            flipTimer = setTimeout(function () {
+                div.className = 'card finish';
+                fstCardArea.className = 'card finish';
+                flipTimer = NaN;
+                if (counter == 10) {
+                    clearInterval(timer);
+                    //setInterval(showSecond, 1000)
+                }
+            }, 500)
+        } else {
+            flipTimer = setTimeout(function () {
+                div.className = 'card back';
+                div.innerHTML = '';
+                fstCardArea.className = 'card back';
+                fstCardArea.innerHTML = '';
+                fstCardArea = null;
+                flipTimer = NaN;
+            }, 500);
+        }
+        fstCard = true;
+    }
+}
 }
 
 function startTimer() {
