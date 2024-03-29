@@ -63,6 +63,8 @@ function disableButtons() {
 }
 
 function enableButtons() {
+    let stopButton = document.getElementById('stop');
+    let resetButton = document.getElementById('reset');
     stopButton.disabled = false;
     resetButton.disabled = false;
 }
