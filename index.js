@@ -73,42 +73,42 @@ function resetGame() {
 
 function flip(crnt) {
     if (gameStarted) {
-    let div = crnt.target;
-    if (flipTimer) return;
-    if (div.innerHTML == '') {
-        div.className = 'card';
-        div.innerHTML = cardTag[div.number];
-    } else {
-        return
-    }
-    if (fstCard) {
-        fstCardArea = div;
-        fstCard = false;
-    } else { // ２枚目の処理
-        if (fstCardArea.number == div.number) {
-            counter++;
-            flipTimer = setTimeout(function () {
-                div.className = 'card finish';
-                fstCardArea.className = 'card finish';
-                flipTimer = NaN;
-                if (counter == 10) {
-                    clearInterval(timer);
-                    //setInterval(showSecond, 1000)
-                }
-            }, 500)
+        let div = crnt.target;
+        if (flipTimer) return;
+        if (div.innerHTML == '') {
+            div.className = 'card';
+            div.innerHTML = cardTag[div.number];
         } else {
-            flipTimer = setTimeout(function () {
-                div.className = 'card back';
-                div.innerHTML = '';
-                fstCardArea.className = 'card back';
-                fstCardArea.innerHTML = '';
-                fstCardArea = null;
-                flipTimer = NaN;
-            }, 500);
+            return;
         }
-        fstCard = true;
+        if (fstCard) {
+            fstCardArea = div;
+            fstCard = false;
+        } else { // ２枚目の処理
+            if (fstCardArea.number == div.number) {
+                counter++;
+                flipTimer = setTimeout(function () {
+                    div.className = 'card finish';
+                    fstCardArea.className = 'card finish';
+                    flipTimer = NaN;
+                    if (counter == 10) {
+                        clearInterval(timer);
+                        //setInterval(showSecond, 1000)
+                    }
+                }, 500)
+            } else {
+                flipTimer = setTimeout(function () {
+                    div.className = 'card back';
+                    div.innerHTML = '';
+                    fstCardArea.className = 'card back';
+                    fstCardArea.innerHTML = '';
+                    fstCardArea = null;
+                    flipTimer = NaN;
+                }, 500);
+            }
+            fstCard = true;
+        }
     }
-}
 }
 
 function startTimer() {
