@@ -58,15 +58,23 @@ function startStopGame(event) {
     if (button.id === 'start') { // スタートボタンがクリックされた場合
         startGame();
         button.textContent = 'リセット';
-        button.id = 'restart';
+        button.id = 'reset'; // ボタンのIDを 'reset' に変更
+        let stopButton = document.getElementById('stop');
+        stopButton.textContent = 'ストップ'; // ストップボタンの名前を 'ストップ' に変更
     } else if (button.id === 'stop') { // ストップボタンがクリックされた場合
         stopGame();
         button.textContent = '再スタート';
-        button.id = 'restart';
+        button.id = 'restart'; // ボタンのIDを 'restart' に変更
     } else if (button.id === 'restart') { // 再スタートボタンがクリックされた場合
         restartGame();
         button.textContent = 'ストップ';
-        button.id = 'stop';
+        button.id = 'stop'; // ボタンのIDを 'stop' に変更
+    } else if (button.id === 'reset') { // リセットボタンがクリックされた場合
+        resetGame();
+        button.textContent = 'スタート';
+        button.id = 'start'; // ボタンのIDを 'start' に変更
+        let stopButton = document.getElementById('stop');
+        stopButton.textContent = 'ストップ'; // ストップボタンの名前を 'ストップ' に変更
     }
 }
 
