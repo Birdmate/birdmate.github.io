@@ -52,7 +52,22 @@ window.onload = () => {
     stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
-    disableButtons();
+    disableButtons(); // すべてのボタンを無効にする
+    enableStartButton(); // スタートボタンだけを有効にする
+}
+
+function enableStartButton() {
+    let startButton = document.getElementById('start');
+    startButton.disabled = false;
+}
+
+function disableButtons() {
+    let startButton = document.getElementById('start');
+    let stopButton = document.getElementById('stop');
+    let resetButton = document.getElementById('reset');
+    startButton.disabled = true;
+    stopButton.disabled = true;
+    resetButton.disabled = true;
 }
 
 function startStopGame(event) {
