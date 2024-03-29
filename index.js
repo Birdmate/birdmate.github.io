@@ -81,10 +81,7 @@ function flip(crnt) {
         } else {
             return;
         }
-        if (fstCard) {
-            fstCardArea = div;
-            fstCard = false;
-        } else { // ２枚目の処理
+        if (fstCardArea) { // fstCardAreaがnullまたはundefinedでないことを確認
             if (fstCardArea.number == div.number) {
                 counter++;
                 flipTimer = setTimeout(function () {
@@ -106,7 +103,9 @@ function flip(crnt) {
                     flipTimer = NaN;
                 }, 500);
             }
-            fstCard = true;
+            fstCardArea = null; // fstCardAreaをリセット
+        } else {
+            fstCardArea = div; // fstCardAreaがnullまたはundefinedの場合、現在のカードをセット
         }
     }
 }
