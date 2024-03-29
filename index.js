@@ -18,9 +18,7 @@ for (let i = 0; i < 10; i++) {
 window.onload = () => {
     initCards();
     let start = document.getElementById('start');
-    start.addEventListener('click', ev => startGame());
-    let reset = document.getElementById('reset');
-    reset.addEventListener('click', ev => resetGame());
+    start.addEventListener('click', startGame);
 }
 
 function initCards() {
@@ -32,7 +30,7 @@ function initCards() {
     // シャッフル
     shuffle(cards);
     let panel = document.getElementById('panel');
-    panel.innerHTML = ''; // パネルをリセット
+    panel.innerHTML = ''; // パネルを初期化
     for (let i = 0; i < 20; i++) {
         let div = document.createElement('div');
         div.className = 'card back';
@@ -56,6 +54,9 @@ function startGame() {
     // タイマー
     startTime = new Date();
     startTimer();
+    let reset = document.getElementById('reset');
+    reset.textContent = "リセット";
+    reset.addEventListener('click', () => resetGame());
 }
 
 function flip(crnt) {
@@ -103,15 +104,17 @@ function showTimer() {
     let nowTime = new Date();
     let elapsedTime = nowTime - startTime;
     let sec = Math.floor(elapsedTime / 1000);
-    let cont = 'プレイ時間：' + sec + '秒';
+    let cont = '経過時間: ' + sec + '秒';
     let result = document.getElementById('result');
     result.innerHTML = cont;
 }
 
 function resetGame() {
-    clearInterval(timer); // タイマーを停止
+    clearInterval(timer);
+    let reset = document.getElementById('reset');
+    reset.textContent = "スタート！";
     let result = document.getElementById('result');
-    result.innerHTML = ''; // 経過時間をクリア
-    initCards(); // ゲームをリセット
-    counter = 0; // カウンターをリセット
+    result.innerHTML = '';
+    counter = 0;
+    initCards();
 }
