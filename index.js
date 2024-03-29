@@ -47,6 +47,8 @@ function stopGame() {
 
 function restartGame() {
     initCards();
+    // startTime を更新せず、以前の開始時刻から再開する
+    startTimer();
 }
 
 function flip(crnt) {
@@ -101,6 +103,8 @@ function showTimer() {
 
 function resetGame() {
     clearInterval(timer);
+    initCards(); // ゲームを初期化
+    startTime = null; // 開始時刻をリセット
     let startButton = document.getElementById('start');
     startButton.textContent = "スタート";
     startButton.id = "start";
@@ -109,5 +113,4 @@ function resetGame() {
     let result = document.getElementById('result');
     result.innerHTML = '';
     counter = 0;
-    initCards();
 }
