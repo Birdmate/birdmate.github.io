@@ -127,6 +127,8 @@ function flip(crnt) {
                     flipTimer = setTimeout(function () {
                         div.className = 'card finish';
                         fstCardArea.className = 'card finish';
+                        div.style.visibility = 'hidden'; // カードを非表示にする
+                        fstCardArea.style.visibility = 'hidden'; // カードを非表示にする
                         flipTimer = NaN;
                         if (counter == 10) {
                             clearInterval(timer);
