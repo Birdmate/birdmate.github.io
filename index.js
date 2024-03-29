@@ -52,7 +52,6 @@ window.onload = () => {
     stop.addEventListener('click', startStopGame);
     let reset = document.getElementById('reset');
     reset.addEventListener('click', resetGame);
-    disableButtons(); // すべてのボタンを無効にする
     enableStartButton(); // スタートボタンだけを有効にする
 }
 
