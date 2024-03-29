@@ -71,6 +71,7 @@ function startStopGame(event) {
 function startGame() {
     if (!gameStarted) {
         enableButtons();
+        initCards(); // カードを初期化する
         startTime = new Date();
         startTimer();
         gameStarted = true;
