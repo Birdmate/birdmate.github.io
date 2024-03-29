@@ -56,7 +56,8 @@ function startGame() {
     startTimer();
     let reset = document.getElementById('reset');
     reset.textContent = "リセット";
-    reset.addEventListener('click', () => resetGame());
+    reset.removeEventListener('click', startGame); // 重複したイベントリスナーを削除
+    reset.addEventListener('click', resetGame); // Reset ボタンがクリックされた時に resetGame 関数を呼び出すイベントリスナーを追加
 }
 
 function flip(crnt) {
