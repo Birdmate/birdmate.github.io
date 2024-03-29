@@ -48,15 +48,17 @@ function shuffle(cards) {
     return cards;
 }
 
-function gameStart(){
+function gameStart() {
     initCards();
     //タイマー
     startTime = new Date();
     startTimer();
-　　start.addEventListener('click', () => {
-    gameStart();
-    start.textContent = "リプレイ";
-]
+    const start = document.getElementById('start');
+    start.addEventListener('click', () => {
+        gameStart();
+        start.textContent = "リプレイ";
+    });
+}
 
 function flip(crnt) {
     let div = crnt.target;
